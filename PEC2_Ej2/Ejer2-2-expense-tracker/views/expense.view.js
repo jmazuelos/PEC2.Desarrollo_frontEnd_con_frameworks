@@ -60,14 +60,15 @@ class TransactionView {
     this.container.append(this.balanceTitle, this.balanceValue, this.subContainer, this.historyTitle, this.list, this.addTitle, this.form);
     this.app.append(this.title, this.container);
 
-    this._temporaryTransactionText = "";
+    this._temporaryTransactionValue = "";
     this._initLocalListeners();
+    this.onlynumeric();
   }
 
   _initLocalListeners() {
     this.list.addEventListener("input", event => {
       if (event.target.className === "editable") {
-        this._temporaryTransactionText = event.target.innerText;
+        this._temporaryTransactionValue = parseFloat(event.target.innerText);
       }
     });
   }
@@ -135,7 +136,7 @@ class TransactionView {
         
         //Muestra por pantalla la tarjeta del historial, que se incluye en la lista
         item.innerHTML = `
-          ${transaction.text} <span>${sign}${Math.abs(transaction.amount)}</span> 
+          ${transaction.text} <span contenteditable="true" class="editable">${sign}${Math.abs(transaction.amount)}</span> 
           <button class="delete-btn">x</button>
         `;
       
@@ -145,16 +146,21 @@ class TransactionView {
         total += transaction.amount;
 
         if(sign === '+'){
-          income += +transaction.amount.toFixed(2);
+          income += +transaction.amount;
         }else{
-          expense += +transaction.amount.toFixed(2);
+          expense += +transaction.amount;
         }
       });
 
       //Muestra por pantalla los valores anteriores actualizados
+
       this.balanceValue.innerText = `$${total.toFixed(2)}`;
       this.incomeParagraph.innerText = `$${income.toFixed(2)}`;
       this.expenseParagraph.innerText = `$${Math.abs(expense).toFixed(2)}`;
+    }else{
+      this.balanceValue.innerText = `$${0..toFixed(2)}`;
+      this.incomeParagraph.innerText = `$${0..toFixed(2)}`;
+      this.expenseParagraph.innerText = `$${0..toFixed(2)}`;
     }
     
     // Debugging
@@ -184,4 +190,26 @@ class TransactionView {
       }
     });
   }
+
+  bindEditTransaction(handler){
+    this.list.addEventListener("focusout", event => {
+      if (this._temporaryTransactionValue && !isNaN(this._temporaryTransactionValue)) {
+        const id = event.target.parentElement.id;
+        handler(id, this._temporaryTransactionValue);
+        this._temporaryTransactionValue = "";
+      }
+    });
+  }
+
+  onlynumeric(){
+    this.list.addEventListener("keydown", event => {
+      if (event.target.className === "editable" && (!/\d|\.|\-/.test(event.key) || (((/\./.test(event.key)) && event.target.innerText.match(/\./))) || (((/\-/.test(event.key)) && event.target.innerText.match(/\-/)))) && event.key !== "Backspace" && event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+        event.preventDefault();
+      }
+    });
+  }
+
 }
+
+
+

@@ -31,4 +31,12 @@ class TransactionService {
 
     this._commit(this.transactions);
   }
+
+  editTransaction(id, updatedValue){
+    this.transactions = this.transactions.map(transaction =>
+      transaction.id == id ? new Transaction({...transaction, amount: updatedValue }) : transaction
+    );
+
+    this._commit(this.transactions);
+  }
 } 

@@ -149,3 +149,18 @@ input[type='number'] {
 .list li:hover .delete-btn {
   opacity: 1;
 }
+
+span.editable {
+  min-width: 20px;
+  padding: 0px 5px;
+}
+
+span.editable:hover {
+  background: rgba(179, 215, 255, 0.52);
+}
+
+span.editable:focus {
+  outline: 0;
+  border: 2px solid #007bff;
+  background: rgba(179, 207, 255, 0.52)
+}
