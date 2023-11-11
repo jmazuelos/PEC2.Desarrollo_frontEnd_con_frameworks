@@ -16,7 +16,6 @@ function doubleMatrix(array) {
   );
 }
 
-console.log([1, 2]*2);
 module.exports = {
   multiplyBy10,
   shiftRight,
