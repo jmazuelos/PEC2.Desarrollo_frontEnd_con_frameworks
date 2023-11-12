@@ -1,19 +1,59 @@
+const { prices, hours, animals } = require("./data");
+
 function entryCalculator(entrants) {
-  // your code here
+  return entryCalculator.arguments.length === 0 || Object.keys(entrants).length === 0 ? 0 : 
+  prices.Adult * entrants.Adult + prices.Child * entrants.Child + prices.Senior * entrants.Senior;
 }
 
 function schedule(dayName) {
-  // your code here
+  let obj = {};
+  Object.keys(hours).forEach(key => {
+    obj[key] = key === 'Monday' ? 'CLOSED' : 'Open from ' + hours[key].open + 'am until ' + (hours[key].close % 12) + 'pm';  
+  });
+  return schedule.arguments.length === 0 ? obj : {[dayName] : obj[dayName]};
 }
 
 function animalCount(species) {
-  // your code here
+  let obj = {};
+  animals.forEach(elem => {
+    obj[elem.name] = elem.residents.length;
+  })
+  return animalCount.arguments.length === 0 ? obj : obj[species];
 }
 
 function animalMap(options) {
-  // your code here
-}
+  let obj = {};
+  animals.forEach(elem => {
+    if(obj.hasOwnProperty(elem.location))
+      obj[elem.location].push(elem.name);
+    else
+      obj[elem.location] = [elem.name];
+  });
 
+  let namesObj = {};
+  animals.forEach(elem => {
+    elem.residents.forEach(subelem => {
+      if(namesObj[elem.name])
+        namesObj[elem.name].push(subelem.name);
+      else
+        namesObj[elem.name] = [subelem.name];
+    });
+  });
+
+  let includeNamesObj = {};
+  Object.keys(obj).forEach(elem => {
+
+  });
+  if(animalMap.arguments.length === 0){
+    return namesObj;
+  }else{
+    let obj2 = {};
+    animals.forEach(elem => {
+      //obj2 = obj.reduce((t, e) => ({...t, elem.name: elem.residents[0].name}))
+    })
+  }
+}
+console.log(animalMap());
 function animalPopularity(rating) {
   // your code here
 }
