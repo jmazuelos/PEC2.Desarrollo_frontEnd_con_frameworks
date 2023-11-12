@@ -30,28 +30,7 @@ function animalMap(options) {
       obj[elem.location] = [elem.name];
   });
 
-  let namesObj = {};
-  animals.forEach(elem => {
-    elem.residents.forEach(subelem => {
-      if(namesObj[elem.name])
-        namesObj[elem.name].push(subelem.name);
-      else
-        namesObj[elem.name] = [subelem.name];
-    });
-  });
-
-  let includeNamesObj = {};
-  Object.keys(obj).forEach(elem => {
-
-  });
-  if(animalMap.arguments.length === 0){
-    return namesObj;
-  }else{
-    let obj2 = {};
-    animals.forEach(elem => {
-      //obj2 = obj.reduce((t, e) => ({...t, elem.name: elem.residents[0].name}))
-    })
-  }
+  if(animalMap.arguments.length === 0) return obj;
 }
 console.log(animalMap());
 function animalPopularity(rating) {
